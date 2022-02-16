@@ -1,4 +1,4 @@
-# dsci532-2022-ia1-joshsia
+# datasci-salaries-dashboard
 
 ## About
 
@@ -16,4 +16,4 @@ The app has a single landing page which shows two plots. The plot on the left co
 
 The plot on the right corresponds to the histogram of salaries for a specific country. A dropdown box is located above the plot to select the desired country.
 
-![dashboard](https://github.com/joshsia/dsci532-2022-ia1-joshsia/blob/main/dashboard.png)
+![dashboard](https://github.com/joshsia/datasci-salaries-dashboard/blob/main/dashboard.png)
