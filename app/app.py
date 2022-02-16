@@ -95,8 +95,9 @@ def country_hist(value):
         color=alt.Color("FormalEducation", sort=education_order,
         title="Education level"),
         order=alt.Order('education_order:Q')
-    ).configure_legend(
-        orient='bottom')
+        ).configure_legend(
+            orient='bottom'
+        )
     )
 
     return chart.to_html()
