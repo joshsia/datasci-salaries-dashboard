@@ -2,6 +2,7 @@ from dash import Dash, html, dcc, Input, Output
 import pandas as pd
 import altair as alt
 from altair import pipe, limit_rows, to_values
+from si_prefix import si_format
 
 alt.renderers.enable('html')
 t = lambda data: pipe(data, limit_rows(max_rows=1_000_000), to_values)
@@ -36,7 +37,7 @@ app.layout = html.Div([
         dcc.RangeSlider(
             id="y-axis-widget", allowCross=False,
             min=0, max=2_600_000, value=[0, 2_600_000],
-            marks={i: str(i) for i in range(0, 2_600_001, 500_000)}
+            marks={i: str(si_format(i, precision=1)) for i in range(0, 2_600_000, 400_000)}
         )], style={'width': '48%', 'display': 'inline-block'}),
     html.Div([], style={'width': '4%', 'display': 'inline-block'}),
     html.Div([
@@ -68,7 +69,8 @@ def countries_boxplot(value):
         y=alt.Y("Salary_USD", title="Salary in USD", 
                 scale=alt.Scale(
                     domain=(value[0], value[1])
-                    )
+                    ),
+                axis=alt.Axis(format='~s')
                 )
             )
         )
