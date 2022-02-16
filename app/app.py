@@ -1,6 +1,6 @@
 from dash import Dash, html, dcc, Input, Output
-import altair as alt
 import pandas as pd
+import altair as alt
 from altair import pipe, limit_rows, to_values
 
 alt.renderers.enable('html')
