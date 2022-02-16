@@ -111,23 +111,22 @@ country_currency <- df_20 %>%
   group_by(Country) %>% 
   mutate(frac = round(n/sum(n),2))
 
-df_20 <- df_20 %>% 
-  left_join(country_currency, by="Country") %>% 
-  mutate(Salary_USD = CompensationAmount * exchangeRate) %>% 
-  filter(!is.na(n)) %>% 
-  select(-n) %>% 
-  group_by(Country) %>% 
-  mutate(Compensation_Median_USD = median (Salary_USD)) %>% 
+df_20 <- df_20 %>%
+  inner_join(country_currency, by=c("Country", "CompensationCurrency")) %>%
+  mutate(Salary_USD = CompensationAmount * exchangeRate) %>%
+  filter(!is.na(n)) %>%
+  select(-n) %>%
+  group_by(Country) %>%
+  mutate(Compensation_Median_USD = median (Salary_USD)) %>%
   mutate(Median_to_Salary = Compensation_Median_USD/Salary_USD)
 
-df_20 <- df_20 %>% 
+df_20 <- df_20 %>%
   mutate(Salary_USD = ifelse(
-    between(Median_to_Salary, 500, 5000), Salary_USD*1000, 
-    ifelse(between(Median_to_Salary, 6, 36), Salary_USD*12, Salary_USD))) %>% 
-  mutate(Compensation_Median_USD = median (Salary_USD)) %>% 
+    between(Median_to_Salary, 500, 5000), Salary_USD*1000,
+    ifelse(between(Median_to_Salary, 6, 36), Salary_USD*12, Salary_USD))) %>%
+  mutate(Compensation_Median_USD = median (Salary_USD)) %>%
   mutate(Median_to_Salary = Compensation_Median_USD/Salary_USD)
 
-write.csv(df_20, here("data", "processed", "cleaned_salaries.csv"),
-          row.names = FALSE)
+write.csv(df_20, here("data", "processed", "cleaned_salaries.csv"), row.names = FALSE)
 
 print("Finished data wrangling")
